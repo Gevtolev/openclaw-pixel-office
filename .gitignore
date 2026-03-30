@@ -9,9 +9,12 @@ out/
 Star-Office-UI/
 OpenClaw-bot-review/
 
-# Screenshots and temp files
-*.png
+# Screenshots and temp files (root-level only, not public assets)
+/*.png
 .playwright-mcp/
 .superpowers/
+
+# Allow public assets
+!public/**/*.png
 
 # Plan and spec docs are in docs/ - keep those tracked
