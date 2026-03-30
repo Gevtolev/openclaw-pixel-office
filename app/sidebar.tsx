@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useI18n, Locale } from '@/lib/i18n';
 import { useTheme } from '@/lib/theme';
+import { GatewayStatus } from './gateway-status';
 import { useState } from 'react';
 
 const NAV_GROUPS = [
@@ -122,9 +123,12 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer: locale + theme */}
+      {/* Footer: gateway status + locale + theme */}
       {!collapsed && (
         <div style={{ padding: '12px 16px', borderTop: '1px solid var(--border)' }}>
+          <div style={{ marginBottom: 8 }}>
+            <GatewayStatus compact />
+          </div>
           <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
             {LOCALES.map((l) => (
               <button

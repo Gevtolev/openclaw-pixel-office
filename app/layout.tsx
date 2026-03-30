@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Providers } from './providers';
 import { Sidebar } from './sidebar';
+import { AlertMonitor } from './alert-monitor';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
+          <AlertMonitor />
           <div style={{ display: 'flex', minHeight: '100vh' }}>
             <Sidebar />
             <main style={{ flex: 1, overflow: 'auto' }}>{children}</main>
