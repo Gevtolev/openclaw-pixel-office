@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT, FURNITURE, NAMEPLATE } from '@/game/config/layout';
 import { CharacterManager } from '@/game/characters/CharacterManager';
+import { UIScene } from '@/game/scenes/UIScene';
 import type { UnifiedAgentState } from '@/lib/state/types';
 
 // Helper: create a looping animation if the texture has multiple frames
@@ -50,6 +51,7 @@ export class OfficeScene extends Scene {
   private characterManager!: CharacterManager;
   private pollTimer = 0;
   private readonly POLL_INTERVAL = 2000;
+  private isFetching = false;
 
   constructor() {
     super({ key: 'OfficeScene' });
@@ -169,20 +171,26 @@ export class OfficeScene extends Scene {
   }
 
   private async fetchAndSync(): Promise<void> {
+    if (this.isFetching) return;
+    this.isFetching = true;
     try {
       const res = await fetch('/api/agents');
-      if (res.ok) {
-        const agents: UnifiedAgentState[] = await res.json();
-        this.characterManager.syncAgents(agents);
-
-        const uiScene = this.scene.get('UIScene') as any;
-        const primary = agents.find((a) => a.role === 'primary');
-        if (primary && uiScene?.updateStatus) {
-          uiScene.updateStatus(primary.state, primary.message);
-        }
+      if (!res.ok) {
+        console.warn(`[OfficeScene] fetchAndSync: HTTP ${res.status}`);
+        return;
       }
-    } catch {
-      // silently retry next poll
+      const agents: UnifiedAgentState[] = await res.json();
+      this.characterManager.syncAgents(agents);
+
+      const uiScene = this.scene.get('UIScene') as UIScene | undefined;
+      const primary = agents.find((a) => a.role === 'primary');
+      if (primary && uiScene?.updateStatus) {
+        uiScene.updateStatus(primary.state, primary.message);
+      }
+    } catch (err) {
+      console.warn('[OfficeScene] fetchAndSync failed, will retry:', err);
+    } finally {
+      this.isFetching = false;
     }
   }
 }
