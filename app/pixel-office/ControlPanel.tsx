@@ -16,11 +16,18 @@ export function ControlPanel() {
 
   const handleSetState = async (state: string) => {
     setActive(state);
-    await fetch('/api/set-state', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ state }),
-    });
+    try {
+      const res = await fetch('/api/set-state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ state }),
+      });
+      if (!res.ok) {
+        console.warn(`[ControlPanel] set-state failed: HTTP ${res.status}`);
+      }
+    } catch (err) {
+      console.warn('[ControlPanel] set-state failed:', err);
+    }
   };
 
   return (
@@ -35,7 +42,7 @@ export function ControlPanel() {
       }}
     >
       <div style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 8, color: 'var(--accent)' }}>
-        Star Status
+        {t('control.title')}
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
         {STATES.map((s) => (
