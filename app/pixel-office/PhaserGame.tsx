@@ -30,7 +30,7 @@ export function PhaserGame({ onSceneReady }: PhaserGameProps) {
           pixelArt: true,
           physics: {
             default: 'arcade',
-            arcade: { gravity: { y: 0 }, debug: false },
+            arcade: { gravity: { x: 0, y: 0 }, debug: false },
           },
           scene: [BootScene, OfficeScene, UIScene],
           scale: {
