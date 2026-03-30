@@ -1,0 +1,17 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+*.tsbuildinfo
+
+# Source project references (not part of this project)
+Star-Office-UI/
+OpenClaw-bot-review/
+
+# Screenshots and temp files
+*.png
+.playwright-mcp/
+.superpowers/
+
+# Plan and spec docs are in docs/ - keep those tracked
