@@ -1,5 +1,7 @@
 import { Scene } from 'phaser';
 import { GAME_WIDTH, GAME_HEIGHT, FURNITURE, NAMEPLATE } from '@/game/config/layout';
+import { CharacterManager } from '@/game/characters/CharacterManager';
+import type { UnifiedAgentState } from '@/lib/state/types';
 
 // Helper: create a looping animation if the texture has multiple frames
 function createLoopAnim(scene: Scene, key: string): Phaser.Animations.Animation | false {
@@ -45,6 +47,10 @@ function addSprite(
 }
 
 export class OfficeScene extends Scene {
+  private characterManager!: CharacterManager;
+  private pollTimer = 0;
+  private readonly POLL_INTERVAL = 2000;
+
   constructor() {
     super({ key: 'OfficeScene' });
   }
@@ -147,5 +153,36 @@ export class OfficeScene extends Scene {
       })
       .setOrigin(0.5, 0.5)
       .setDepth(9001);
+
+    // Initialize character manager
+    this.characterManager = new CharacterManager(this);
+    this.fetchAndSync();
+  }
+
+  update(_time: number, delta: number): void {
+    this.pollTimer += delta;
+    if (this.pollTimer >= this.POLL_INTERVAL) {
+      this.pollTimer = 0;
+      this.fetchAndSync();
+    }
+    this.characterManager.update(delta);
+  }
+
+  private async fetchAndSync(): Promise<void> {
+    try {
+      const res = await fetch('/api/agents');
+      if (res.ok) {
+        const agents: UnifiedAgentState[] = await res.json();
+        this.characterManager.syncAgents(agents);
+
+        const uiScene = this.scene.get('UIScene') as any;
+        const primary = agents.find((a) => a.role === 'primary');
+        if (primary && uiScene?.updateStatus) {
+          uiScene.updateStatus(primary.state, primary.message);
+        }
+      }
+    } catch {
+      // silently retry next poll
+    }
   }
 }
