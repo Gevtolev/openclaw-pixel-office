@@ -44,6 +44,7 @@ export function Sidebar() {
   const { t, locale, setLocale } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const [collapsed, setCollapsed] = useState(false);
+  const [experimentExpanded, setExperimentExpanded] = useState(false);
 
   return (
     <aside
@@ -121,6 +122,49 @@ export function Sidebar() {
             })}
           </div>
         ))}
+        {/* Experiments accordion */}
+        <div style={{ marginBottom: 16 }}>
+          <button
+            onClick={() => setExperimentExpanded(!experimentExpanded)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
+              padding: collapsed ? '4px 18px' : '4px 16px',
+              background: 'none',
+              border: 'none',
+              color: 'var(--text-muted)',
+              cursor: 'pointer',
+              fontSize: 11,
+              textTransform: 'uppercase' as const,
+              letterSpacing: 1,
+            }}
+          >
+            {!collapsed && <span>{t('nav.experiments')}</span>}
+            {!collapsed && <span style={{ fontSize: 10 }}>{experimentExpanded ? '▾' : '▸'}</span>}
+            {collapsed && <span style={{ fontSize: 14 }}>🧪</span>}
+          </button>
+          {(experimentExpanded || collapsed) && (
+            <Link
+              href="/decorate"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: collapsed ? '8px 18px' : '8px 16px',
+                color: 'var(--text)',
+                background: 'transparent',
+                textDecoration: 'none',
+                fontSize: 14,
+                borderLeft: '3px solid transparent',
+              }}
+            >
+              <span>🎨</span>
+              {!collapsed && <span>{t('nav.decorate')}</span>}
+            </Link>
+          )}
+        </div>
       </nav>
 
       {/* Footer: gateway status + locale + theme */}
