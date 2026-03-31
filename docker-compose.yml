@@ -1,0 +1,13 @@
+services:
+  pixel-office:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - "${HOME}/.openclaw:/root/.openclaw:ro"
+    environment:
+      - NODE_ENV=production
+      - PIXEL_OFFICE_ENV=${PIXEL_OFFICE_ENV:-}
+      - SESSION_SECRET=${SESSION_SECRET:-}
+      - ASSET_DRAWER_PASS=${ASSET_DRAWER_PASS:-}
+    restart: unless-stopped
