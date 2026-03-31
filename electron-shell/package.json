@@ -1,0 +1,14 @@
+{
+  "name": "openclaw-pixel-office-desktop",
+  "productName": "OpenClaw Pixel Office",
+  "private": true,
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron .",
+    "start": "electron ."
+  },
+  "dependencies": {
+    "electron": "^40.6.1"
+  }
+}
