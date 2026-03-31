@@ -1,7 +1,22 @@
+# OpenClaw Pixel Office
+
+## 开发模式
+
+```bash
+# 安装依赖
+pnpm install
+
+# 启动开发服务器（带热更新）
+pnpm dev
+# 访问 http://localhost:3000
+```
+
+---
+
 ## Docker 部署
 
 ```bash
-# 构建并启动（~/.openclaw 以只读方式挂载）
+# 构建并启动（~/.openclaw 挂载至容器）
 docker compose up --build -d
 # 访问 http://localhost:3000
 ```
