@@ -3,6 +3,7 @@
 import { PhaserGame } from './pixel-office/PhaserGame';
 import { ControlPanel } from './pixel-office/ControlPanel';
 import { MemoCard } from './pixel-office/MemoCard';
+import { AssetSidebar } from './pixel-office/AssetSidebar';
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <PhaserGame />
       <ControlPanel />
       <MemoCard />
+      <AssetSidebar />
     </div>
   );
 }
