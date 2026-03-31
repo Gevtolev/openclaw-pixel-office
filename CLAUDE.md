@@ -9,18 +9,51 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 pnpm dev          # 启动开发服务器（Turbopack 热更新）
 pnpm build        # 生产构建
-pnpm test         # 运行全部测试（单次）
+pnpm test         # 运行全部测试（~0.5s，无需 dev server）
 pnpm test:watch   # 测试监听模式
 
 # 运行单个测试文件
 pnpm test tests/unit/security-utils.test.ts
 pnpm test tests/game/bridge/AgentBridge.test.ts
-```
 
-TypeScript 类型检查（不输出文件）：
-```bash
+# TypeScript 类型检查
 pnpm exec tsc --noEmit
 ```
+
+---
+
+## 开发规则
+
+**提交前必须通过测试：**
+- 每次提交前至少运行 `pnpm test` 确保全部通过
+- 修改 Phaser 游戏逻辑（`game/`）后必须用浏览器实际启动验证角色行为正常
+
+**UI 改动必须用浏览器验证：**
+- 修改组件、样式、布局后，必须用 playwright MCP 打开 `http://localhost:3000` 截图确认渲染正确，并检查 console 无报错
+- 涉及交互改动（按钮、表单、Phaser 点击）需通过 playwright 模拟操作验证
+
+**新增 Phaser 功能前确认渲染限制：**
+- Phaser 及所有游戏代码（`game/`）只能在客户端运行，不能在 Server Component 或 API 路由中 import
+- 新增 Scene、Effect、Character 类后，必须在 `game/config/sprites.ts` 注册资源，否则 BootScene 不会预加载
+
+**commit 信息规范：**
+- 标题行使用 conventional commits（`feat/fix/refactor/docs/test/chore`）
+- body 说明改了什么、为什么改、影响范围；修复 bug 需说明根因
+
+---
+
+## 改动自查
+
+完成代码修改后，提交前确认：
+
+| 改动类型 | 需要同步的地方 |
+|---------|--------------|
+| 新增 UI 文案 | `lib/i18n.tsx` 补全 **4 个语言**（zh / zh-TW / en / ja） |
+| 新增精灵/图片资源 | `game/config/sprites.ts` 注册到 `SPRITES` 或 `IMAGES` |
+| 调整游戏坐标/布局 | `game/config/layout.ts`（`ZONES`、`FURNITURE`、`SEATS`） |
+| 新增 API 路由 | 添加 `export const dynamic = 'force-dynamic'` |
+| 资源上传/删除路由 | 调用 `isAllowedAssetFilename()` 校验扩展名 |
+| 组件样式 | 使用 CSS 变量（`--card`、`--border`、`--accent` 等），**禁止硬编码颜色** |
 
 ---
 
