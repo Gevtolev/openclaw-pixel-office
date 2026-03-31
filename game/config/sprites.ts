@@ -22,12 +22,12 @@ export const SPRITES: SpriteConfig[] = [
   { key: 'posters', path: '/sprites/posters-spritesheet.webp', frameWidth: 128, frameHeight: 128 },
 
   // Guest character animations
-  { key: 'guest-anim-1', path: '/sprites/guest_anim_1.webp', frameWidth: 128, frameHeight: 128 },
-  { key: 'guest-anim-2', path: '/sprites/guest_anim_2.webp', frameWidth: 128, frameHeight: 128 },
-  { key: 'guest-anim-3', path: '/sprites/guest_anim_3.webp', frameWidth: 128, frameHeight: 128 },
-  { key: 'guest-anim-4', path: '/sprites/guest_anim_4.webp', frameWidth: 128, frameHeight: 128 },
-  { key: 'guest-anim-5', path: '/sprites/guest_anim_5.webp', frameWidth: 128, frameHeight: 128 },
-  { key: 'guest-anim-6', path: '/sprites/guest_anim_6.webp', frameWidth: 128, frameHeight: 128 },
+  { key: 'guest-anim-1', path: '/sprites/guest_anim_1.webp', frameWidth: 32, frameHeight: 32 },
+  { key: 'guest-anim-2', path: '/sprites/guest_anim_2.webp', frameWidth: 32, frameHeight: 32 },
+  { key: 'guest-anim-3', path: '/sprites/guest_anim_3.webp', frameWidth: 32, frameHeight: 32 },
+  { key: 'guest-anim-4', path: '/sprites/guest_anim_4.webp', frameWidth: 32, frameHeight: 32 },
+  { key: 'guest-anim-5', path: '/sprites/guest_anim_5.webp', frameWidth: 32, frameHeight: 32 },
+  { key: 'guest-anim-6', path: '/sprites/guest_anim_6.webp', frameWidth: 32, frameHeight: 32 },
 ];
 
 // Static images (no frame dimensions needed)
