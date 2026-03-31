@@ -1,3 +1,4 @@
+import { parseJsonText } from "@/lib/json";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
@@ -13,7 +14,7 @@ function hasEmbeddedHttpError(reply: string): boolean {
 export async function POST() {
   try {
     const raw = fs.readFileSync(CONFIG_PATH, "utf-8");
-    const config = JSON.parse(raw);
+    const config = parseJsonText(raw);
     const gatewayPort = config.gateway?.port || 18789;
     const gatewayToken = config.gateway?.auth?.token || "";
 

@@ -1,3 +1,4 @@
+import { parseJsonText } from "@/lib/json";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
@@ -1078,7 +1079,7 @@ async function testQqbot(
 export async function POST() {
   try {
     const raw = fs.readFileSync(CONFIG_PATH, "utf-8");
-    const config = JSON.parse(raw);
+    const config = parseJsonText(raw);
 
     const bindings = config.bindings || [];
     const channels = config.channels || {};

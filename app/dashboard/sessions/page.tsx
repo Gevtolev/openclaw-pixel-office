@@ -120,7 +120,7 @@ function AgentPicker() {
         {agents.map((agent) => (
           <Link
             key={agent.id}
-            href={`/sessions?agent=${agent.id}`}
+            href={`/dashboard/sessions?agent=${agent.id}`}
             className="p-5 rounded-xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--accent)] transition cursor-pointer block"
           >
             <div className="flex items-center gap-3 mb-3">

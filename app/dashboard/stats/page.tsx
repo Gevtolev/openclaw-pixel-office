@@ -276,7 +276,7 @@ function StatsAgentPicker() {
         {agents.map((agent) => (
           <Link
             key={agent.id}
-            href={`/stats?agent=${agent.id}`}
+            href={`/dashboard/stats?agent=${agent.id}`}
             className="p-5 rounded-xl border border-[var(--border)] bg-[var(--card)] hover:border-[var(--accent)] transition cursor-pointer block"
           >
             <div className="flex items-center gap-3 mb-3">
@@ -394,13 +394,13 @@ function StatsDetail({ agentId }: { agentId: string }) {
             </div>
           </div>
           <Link
-            href={`/sessions?agent=${agentId}`}
+            href={`/dashboard/sessions?agent=${agentId}`}
             className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm hover:border-[var(--accent)] transition text-center"
           >
             {t("stats.sessionList")}
           </Link>
           <Link
-            href={`/stats`}
+            href={`/dashboard/stats`}
             className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[var(--card)] border border-[var(--border)] text-sm hover:border-[var(--accent)] transition text-center"
           >
             {t("stats.backToAgents")}

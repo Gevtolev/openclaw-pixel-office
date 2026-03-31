@@ -1,3 +1,4 @@
+import { parseJsonText } from "@/lib/json";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
@@ -57,7 +58,7 @@ function getGatewayConfig() {
   const configPath = OPENCLAW_CONFIG_PATH;
   try {
     const raw = fs.readFileSync(configPath, "utf-8");
-    const config = JSON.parse(raw);
+    const config = parseJsonText(raw);
     return {
       port: config.gateway?.port || 18789,
       token: config.gateway?.auth?.token || "",

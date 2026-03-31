@@ -1,3 +1,4 @@
+import { parseJsonText } from "@/lib/json";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
@@ -31,7 +32,7 @@ function loadAgentList(config: any): AgentConfig[] {
 export async function POST() {
   try {
     const raw = fs.readFileSync(CONFIG_PATH, "utf-8");
-    const config = JSON.parse(raw);
+    const config = parseJsonText(raw);
     const defaults = config?.agents?.defaults || {};
     const defaultModel = typeof defaults.model === "string"
       ? defaults.model
