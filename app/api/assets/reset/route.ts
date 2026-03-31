@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
-import { CUSTOM_ASSETS_DIR, checkPassword } from '@/lib/asset-utils';
+import path from 'path';
+import { CUSTOM_ASSETS_DIR, checkPassword, isAllowedAssetFilename } from '@/lib/asset-utils';
 
 export async function DELETE(req: Request) {
   const password = req.headers.get('x-asset-pass') || '';
@@ -14,7 +15,8 @@ export async function DELETE(req: Request) {
     }
     const files = fs.readdirSync(CUSTOM_ASSETS_DIR);
     for (const file of files) {
-      fs.unlinkSync(`${CUSTOM_ASSETS_DIR}/${file}`);
+      if (!isAllowedAssetFilename(file)) continue;
+      fs.unlinkSync(path.join(CUSTOM_ASSETS_DIR, file));
     }
     return NextResponse.json({ ok: true, deleted: files.length });
   } catch (e: any) {

@@ -4,7 +4,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - "${HOME}/.openclaw:/root/.openclaw:ro"
+      - "${HOME}/.openclaw:/root/.openclaw"
     environment:
       - NODE_ENV=production
       - PIXEL_OFFICE_ENV=${PIXEL_OFFICE_ENV:-}

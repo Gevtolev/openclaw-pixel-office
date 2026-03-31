@@ -209,7 +209,10 @@ function registerIpc() {
     }
 
     if (cmd === 'open_external_url') {
-      if (args && args.url) await shell.openExternal(args.url);
+      if (args && args.url) {
+        const url = String(args.url);
+        if (/^https?:\/\//i.test(url)) await shell.openExternal(url);
+      }
       return null;
     }
 
